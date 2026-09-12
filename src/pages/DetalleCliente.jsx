@@ -1,12 +1,13 @@
 import '../css/detallecliente.css'
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import useAutorizaciones from "../hooks/useAutorizaciones";
 import clientesService from "../services/clientesService";
 
 const DetalleCliente = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const role = localStorage.getItem("role");
+  const { admin } = useAutorizaciones();
 
   const [cliente, setCliente] = useState(null);
   const [mensaje, setMensaje] = useState("");
@@ -47,7 +48,7 @@ const DetalleCliente = () => {
   return (
     <div className="detalle-cliente">
       <h1>Ficha del Cliente</h1>
-      <p>Rol actual: {role}</p>
+      <p>Rol actual: {admin?.sector}</p>
 
       {mensaje && <p className='mensaje-eliminado'>{mensaje}</p>}
 
@@ -92,11 +93,7 @@ const DetalleCliente = () => {
         <strong>Usuario:</strong> {cliente.username}
       </p>
 
-      <p>
-        <strong>Contraseña:</strong> ********
-      </p>
-
-      {role?.trim() === "Gerencia" && (
+      {admin?.sector?.trim() === "Gerencia" && (
         <button className='btn-eliminar' onClick={eliminarCliente}>
           Eliminar Cliente
         </button>

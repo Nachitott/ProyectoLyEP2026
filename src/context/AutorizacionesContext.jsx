@@ -1,31 +1,36 @@
-import { createContext, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
+import { AutorizacionesContext } from './autorizacionesContextInstance'
 
-export const AutorizacionesContext = createContext()
+const leerAdminGuardado = () => {
+  const adminGuardado = localStorage.getItem('admin')
+  if (!adminGuardado) return null
+
+  try {
+    return JSON.parse(adminGuardado)
+  } catch (error) {
+    console.warn('Se encontró un valor corrupto en localStorage["admin"]. Se eliminará.', error)
+    localStorage.removeItem('admin')
+    return null
+  }
+}
 
 const AutorizacionesProvider = ({ children }) => {
+  const [admin, setAdmin] = useState(leerAdminGuardado)
 
-  const [admin, setAdmin] = useState(()=>{
-    const adminGuardado= localStorage.getItem('admin')
-    if(adminGuardado){
-      return JSON.parse(adminGuardado)
+  useEffect(() => {
+    if (admin) {
+      localStorage.setItem('admin', JSON.stringify(admin))
+    } else {
+      localStorage.removeItem('admin')
     }
-    return null
-  })
-useEffect(()=>{
-  if(admin){
-    localStorage.setItem(
-      'admin',
-      JSON.stringify(admin)
-    )
-  }else{
-    localStorage.removeItem('admin')
+  }, [admin])
+
+  const cerrarSesion = () => {
+    setAdmin(null)
+    localStorage.removeItem('role')
   }
 
-},[admin])
-const cerrarSesion=()=>{
-  setAdmin(null)
-}
-return (
+  return (
     <AutorizacionesContext.Provider
       value={{ admin, setAdmin, cerrarSesion }}
     >
