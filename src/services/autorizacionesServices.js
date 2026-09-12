@@ -1,48 +1,48 @@
+/**
+ * MOCK TEMPORAL DE AUTENTICACIÓN
+ * Se eliminaron las credenciales estáticas por seguridad (CWE-798).
+ * Pendiente: Conectar con API real para validación segura mediante JWT.
+ */
 const usuarios = [
   {
     email: 'antonella@gmail.com',
-    password: 'Admin123',
     nombre: 'Antonella',
     sector: 'Soporte'
   },
   {
     email: 'jimena@gmail.com',
-    password: 'Admin123',
     nombre: 'Jimena',
     sector: 'Gerencia'
   },
   {
     email: 'maia@gmail.com',
-    password: 'Admin123',
     nombre: 'Maia',
     sector: 'Gerencia'
   },
   {
     email: 'abril@gmail.com',
-    password: 'Admin123',
     nombre: 'Abril',
     sector: 'Soporte'
   },
   {
     email: 'guadalupe@gmail.com',
-    password: 'Admin123',
     nombre: 'Guadalupe',
     sector: 'Soporte'
   },
   {
     email: 'lourdes@gmail.com',
-    password: 'Admin123',
     nombre: 'Lourdes',
     sector: 'Gerencia'
   }
 ]
 const login = (email, password, sector) => {
-  return usuarios.find(
-    usuario =>
-      usuario.email === email &&
-      usuario.password === password &&
-      usuario.sector === sector
-  )
+  // Simula la llamada al backend que devuelve usuario y JWT
+  const usuario = usuarios.find(u => u.email === email && u.sector === sector);
+  
+  if (usuario) {
+    return { ...usuario, token: "eyJhbGciOiJIUzI1NiIsInR5c... (simulacion JWT)" };
+  }
+  return null;
 }
 export default {
   login
