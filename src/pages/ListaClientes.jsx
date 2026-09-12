@@ -1,6 +1,7 @@
 import "../css/listaclientes.css";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import clientesService from "../services/clientesService";
 
 import FormCliente from "../components/FormCliente";
 import useDebounce from "../hooks/useDebounce";
@@ -16,22 +17,22 @@ const ListaClientes = () => {
   setClientes((prevClientes) => [nuevoCliente, ...prevClientes]);
 };
 
-  useEffect(() => {
-    fetch("https://fakestoreapi.com/users")
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Error al obtener clientes");
-        }
-        return res.json();
+    const cargarClientes = () => {
+    setLoading(true);
+    setError(false);
+    clientesService.getClientes()
+      .then(data => { 
+        setClientes(data); 
+        setLoading(false); 
       })
-      .then((data) => {
-        setClientes(data);
-        setLoading(false);
-      })
-      .catch(() => {
-        setError(true);
-        setLoading(false);
+      .catch(() => { 
+        setError(true); 
+        setLoading(false); 
       });
+  };
+
+  useEffect(() => {
+    cargarClientes();
   }, []);
 
   const clientesFiltrados = clientes.filter((cliente) => {
