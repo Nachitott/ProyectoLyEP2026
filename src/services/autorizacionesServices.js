@@ -1,3 +1,8 @@
+/**
+ * MOCK TEMPORAL DE AUTENTICACIÓN
+ * Se eliminaron las credenciales estáticas por seguridad (CWE-798).
+ * Pendiente: Conectar con API real para validación segura mediante JWT.
+ */
 const usuarios = [
   {
     email: 'antonella@gmail.com',
