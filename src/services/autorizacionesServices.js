@@ -31,11 +31,13 @@ const usuarios = [
   }
 ]
 const login = (email, password, sector) => {
-  return usuarios.find(
-    usuario =>
-      usuario.email === email &&
-      usuario.sector === sector
-  )
+  // Simula la llamada al backend que devuelve usuario y JWT
+  const usuario = usuarios.find(u => u.email === email && u.sector === sector);
+  
+  if (usuario) {
+    return { ...usuario, token: "eyJhbGciOiJIUzI1NiIsInR5c... (simulacion JWT)" };
+  }
+  return null;
 }
 export default {
   login
