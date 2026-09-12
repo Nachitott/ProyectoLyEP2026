@@ -5,8 +5,8 @@ import "../css/listaclientes.css";
 const NuevoCliente = () => {
   return (
     <div className="clientes-container">
-      <div className="header-acciones">
-        <Link to="/clientes" className="btn-ficha btn-volver">
+      <div className="contenedor-volver">
+        <Link to="/clientes" className="link-volver">
           &larr; Volver al Listado
         </Link>
       </div>
