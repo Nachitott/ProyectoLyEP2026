@@ -89,7 +89,7 @@ const DetalleCliente = () => {
       </p>
 
       <p>
-        <strong>Contraseña:</strong> {cliente.password}
+        <strong>Contraseña:</strong> ********
       </p>
 
       {role?.trim() === "Gerencia" && (
