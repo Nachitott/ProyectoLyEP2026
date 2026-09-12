@@ -27,6 +27,7 @@ const AutorizacionesProvider = ({ children }) => {
 
   const cerrarSesion = () => {
     setAdmin(null)
+    localStorage.removeItem('role')
   }
 
   return (
