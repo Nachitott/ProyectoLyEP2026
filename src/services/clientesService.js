@@ -1,17 +1,23 @@
-import axios from "axios";
+import api from './api';
 
-const URL = "https://fakestoreapi.com/users";
+const getClientes = async () => {
+    const response = await api.get('/users');
+    return response.data;
+};
+
+const getClienteById = async (id) => {
+    const response = await api.get(`/users/${id}`);
+    return response.data;
+};
 
 const crearCliente = async (cliente) => {
-
-    const respuesta = await axios.post(
-        URL,
-        cliente
-    );
-
-    return respuesta.data;
+    const response = await api.post('/users', cliente);
+    return response.data;
 };
 
-export default {
-    crearCliente
+const eliminarCliente = async (id) => {
+    const response = await api.delete(`/users/${id}`);
+    return response.data;
 };
+
+export default { getClientes, getClienteById, crearCliente, eliminarCliente };
