@@ -1,6 +1,7 @@
 import "../css/listaclientes.css";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import clientesService from "../services/clientesService";
 
 import FormCliente from "../components/FormCliente";
 import useDebounce from "../hooks/useDebounce";
@@ -16,22 +17,22 @@ const ListaClientes = () => {
   setClientes((prevClientes) => [nuevoCliente, ...prevClientes]);
 };
 
-  useEffect(() => {
-    fetch("https://fakestoreapi.com/users")
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Error al obtener clientes");
-        }
-        return res.json();
+    const cargarClientes = () => {
+    setLoading(true);
+    setError(false);
+    clientesService.getClientes()
+      .then(data => { 
+        setClientes(data); 
+        setLoading(false); 
       })
-      .then((data) => {
-        setClientes(data);
-        setLoading(false);
-      })
-      .catch(() => {
-        setError(true);
-        setLoading(false);
+      .catch(() => { 
+        setError(true); 
+        setLoading(false); 
       });
+  };
+
+  useEffect(() => {
+    cargarClientes();
   }, []);
 
   const clientesFiltrados = clientes.filter((cliente) => {
@@ -63,9 +64,16 @@ if (loading) {
 if (error) {
   return (
     <div className="clientes-container mt-4">
-      <Alert variant="danger">
+      <Alert variant="danger" className="text-center">
         <Alert.Heading>Error de conexión</Alert.Heading>
-        <p>Ocurrió un error al cargar los clientes desde la API. Por favor, reintenta más tarde.</p>
+        <p>Ocurrió un error al cargar los clientes desde la API.</p>
+        <hr />
+        <button 
+          onClick={cargarClientes} 
+          className="btn btn-outline-danger font-weight-bold"
+        >
+          Reintentar conexión
+        </button>
       </Alert>
     </div>
   );
