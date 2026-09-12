@@ -10,6 +10,9 @@ const ListaClientes = () => {
   const busquedaDebounced = useDebounce(busqueda, 300);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const handleClienteCreado = (nuevoCliente) => {
+  setClientes((prevClientes) => [nuevoCliente, ...prevClientes]);
+};
 
   useEffect(() => {
     fetch("https://fakestoreapi.com/users")
@@ -58,7 +61,7 @@ const ListaClientes = () => {
     <div className="clientes-container">
 
       <h1>Clientes</h1>
-      <FormCliente />
+      <FormCliente onClienteCreado={handleClienteCreado} />
 
       <hr />
 
