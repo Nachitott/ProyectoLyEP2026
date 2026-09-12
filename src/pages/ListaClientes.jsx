@@ -2,10 +2,12 @@ import "../css/listaclientes.css"
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import FormCliente from "../components/FormCliente";
+import useDebounce from "../hooks/useDebounce";
 
 const ListaClientes = () => {
   const [clientes, setClientes] = useState([]);
   const [busqueda, setBusqueda] = useState("");
+  const busquedaDebounced = useDebounce(busqueda, 300);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
@@ -28,12 +30,21 @@ const ListaClientes = () => {
   }, []);
 
   const clientesFiltrados = clientes.filter((cliente) => {
-    const apellido = cliente?.name?.lastname?.toLowerCase() ?? "";
-    const ciudad = cliente?.address?.city?.toLowerCase() ?? "";
-    const texto = busqueda.toLowerCase();
-
-    return apellido.includes(texto) || ciudad.includes(texto);
-  });
+  const termino = busquedaDebounced.toLowerCase().trim();
+  if (!termino) return true;
+  const nombre = cliente?.name?.firstname?.toLowerCase() ?? "";
+  const apellido = cliente?.name?.lastname?.toLowerCase() ?? "";
+  const email = cliente?.email?.toLowerCase() ?? "";
+  const ciudad = cliente?.address?.city?.toLowerCase() ?? "";
+  const telefono = cliente?.phone?.toLowerCase() ?? "";
+  return (
+    nombre.includes(termino) ||
+    apellido.includes(termino) ||
+    email.includes(termino) ||
+    ciudad.includes(termino) ||
+    telefono.includes(termino)
+  );
+});
 
   if (loading) {
     return <h2>Cargando clientes...</h2>;
@@ -60,7 +71,7 @@ const ListaClientes = () => {
         <input
           className="buscador"
           type="text"
-          placeholder="Buscar por apellido o ciudad"
+          placeholder="Buscar por nombre, apellido, email, ciudad o teléfono..."
           value={busqueda}
           onChange={(e) => setBusqueda(e.target.value)}
         />
