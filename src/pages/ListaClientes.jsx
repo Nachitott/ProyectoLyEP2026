@@ -27,15 +27,13 @@ const ListaClientes = () => {
       });
   }, []);
 
-  const clientesFiltrados = clientes.filter(
-    (cliente) =>
-      cliente.name.lastname
-        .toLowerCase()
-        .includes(busqueda.toLowerCase()) ||
-      cliente.address.city
-        .toLowerCase()
-        .includes(busqueda.toLowerCase())
-  );
+  const clientesFiltrados = clientes.filter((cliente) => {
+    const apellido = cliente?.name?.lastname?.toLowerCase() ?? "";
+    const ciudad = cliente?.address?.city?.toLowerCase() ?? "";
+    const texto = busqueda.toLowerCase();
+
+    return apellido.includes(texto) || ciudad.includes(texto);
+  });
 
   if (loading) {
     return <h2>Cargando clientes...</h2>;
