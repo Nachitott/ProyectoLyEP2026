@@ -64,9 +64,16 @@ if (loading) {
 if (error) {
   return (
     <div className="clientes-container mt-4">
-      <Alert variant="danger">
+      <Alert variant="danger" className="text-center">
         <Alert.Heading>Error de conexión</Alert.Heading>
-        <p>Ocurrió un error al cargar los clientes desde la API. Por favor, reintenta más tarde.</p>
+        <p>Ocurrió un error al cargar los clientes desde la API.</p>
+        <hr />
+        <button 
+          onClick={cargarClientes} 
+          className="btn btn-outline-danger font-weight-bold"
+        >
+          Reintentar conexión
+        </button>
       </Alert>
     </div>
   );
