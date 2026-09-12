@@ -120,3 +120,20 @@ input[type="text"]{
 input[type="text"]::placeholder{
     color:#c78aa6;
 } 
+
+.header-acciones {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1.5rem 0;
+}
+
+.btn-nuevo-cliente {
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 24px;
+}
+
+.btn-volver {
+  text-decoration: none;
+}

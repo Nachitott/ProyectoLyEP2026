@@ -1,7 +1,6 @@
-import "../css/listaclientes.css"
+import "../css/listaclientes.css";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import FormCliente from "../components/FormCliente";
 
 const ListaClientes = () => {
   const [clientes, setClientes] = useState([]);
@@ -48,10 +47,10 @@ const ListaClientes = () => {
   return (
     <div className="clientes-container">
 
-      <h1>Clientes</h1>
-      <FormCliente />
-
-      <hr />
+      <div className="header-acciones">
+        <Link to="/clientes/nuevo" className="btn-ficha btn-nuevo-cliente">
+         +Nuevo cliente</Link>
+      </div>
 
       <div className="contenedor-buscador">
 
