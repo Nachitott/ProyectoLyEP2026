@@ -33,6 +33,7 @@ const DetalleCliente = () => {
         }, 2000);
       }
     } catch (error) {
+      console.error("Error al eliminar cliente:", error);
       setMensaje("Error al eliminar cliente");
     }
   };
