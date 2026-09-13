@@ -1,58 +1,62 @@
-.detalle-cliente{
-    background:white;
-    max-width:850px;
-    margin:40px auto;
-    padding:40px;
-    border-radius:22px;
-    box-shadow:0px 15px 35px rgba(214,51,132,.12);
+.detalle-cliente {
+    background: var(--bg-surface);
+    max-width: 850px;
+    margin: 40px auto;
+    padding: 40px;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
 }
 
-.detalle-cliente h1{
-    text-align:center;
-    margin-bottom:35px;
-    color:#d63384;
+.detalle-cliente h1 {
+    text-align: center;
+    margin-bottom: 35px;
+    color: var(--color-primary);
 }
 
-.detalle-cliente h2{
-    margin-top:30px;
-    padding-bottom:8px;
-    border-bottom:2px solid #ffd6e7;
-    color:#c2185b;
+.detalle-cliente h2 {
+    margin-top: 30px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border-color-subtle);
+    color: var(--text-headings);
 }
 
-.detalle-cliente p{
-    margin:12px 0;
-    color:#5f4b57;
+.detalle-cliente p {
+    margin: 12px 0;
+    color: var(--text-main);
 }
 
-.detalle-cliente strong{
-    color:#d63384;
+.detalle-cliente strong {
+    color: var(--color-primary);
 }
 
-.btn-eliminar{
-    margin-top:25px;
-    background:#dc3545;
-    color:white;
-    border:none;
-    border-radius:10px;
-    padding:10px 20px;
-    width:100%;
-    font-weight:600;
-    transition:.3s;
+.btn-eliminar {
+    margin-top: 25px;
+    background: var(--color-danger);
+    color: var(--text-inverse);
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 12px 20px;
+    width: 100%;
+    font-weight: 600;
+    transition: var(--transition-fast);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.btn-eliminar:hover{
-    background:#bb2d3b;
-    transform:scale(1.02);
+.btn-eliminar:hover {
+    background: var(--color-danger-hover);
+    transform: scale(1.01);
 }
-.mensaje-eliminado{
-    background:#d4edda;
-    color:#155724;
-    border:1px solid #b8dfc2;
-    padding:15px;
-    border-radius:12px;
-    text-align:center;
-    font-size:18px;
-    font-weight:bold;
-    margin-bottom:25px;
+
+.mensaje-eliminado {
+    background: var(--color-success-bg);
+    color: var(--color-success);
+    border: 1px solid var(--color-success-border);
+    padding: 15px;
+    border-radius: var(--radius-md);
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 25px;
 }
