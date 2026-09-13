@@ -1,9 +1,9 @@
 import "../css/listaclientes.css";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import clientesService from "../services/clientesService";
-
+import { FiEye, FiSearch } from "react-icons/fi";
 import FormCliente from "../components/FormCliente";
+import clientesService from "../services/clientesService";
 import useDebounce from "../hooks/useDebounce";
 import { Spinner, Alert } from "react-bootstrap";
 
@@ -90,28 +90,27 @@ if (error) {
 
       <div className="header-acciones">
         <Link to="/clientes/nuevo" className="btn-ficha btn-nuevo-cliente">
-         +Nuevo cliente</Link>
+          + Nuevo cliente
+        </Link>
       </div>
 
-
-      <div className="contenedor-buscador">
-
-        <h2 className="titulo-buscador">
-          Buscar Clientes
-        </h2>
-
-        <input
-          className="buscador"
-          type="text"
-          placeholder="Buscar por nombre, apellido, email, ciudad o teléfono..."
-          value={busqueda}
-          onChange={(e) => setBusqueda(e.target.value)}
-        />
-
-        <p className="cantidad-clientes">
-          Clientes encontrados: {clientesFiltrados.length}
-        </p>
-
+      <div className="tabla-header-bar">
+        <h2 className="tabla-titulo">Listado de Clientes</h2>
+        <div className="contenedor-buscador">
+          <div className="buscador-input-group">
+            <FiSearch className="buscador-icon" />
+            <input
+              className="buscador"
+              type="text"
+              placeholder="Buscar por apellido o ciudad..."
+              value={busqueda}
+              onChange={(e) => setBusqueda(e.target.value)}
+            />
+          </div>
+          <span className="badge-cantidad">
+            {clientesFiltrados.length} encontrados
+          </span>
+        </div>
       </div>
       <table className="tabla-clientes">
 
@@ -145,7 +144,7 @@ if (error) {
         <td>{cliente.address?.city ?? "-"}</td>
         <td>
           <Link className="btn-ficha" to={`/clientes/${cliente.id}`}>
-            Ver Ficha Completa
+            <FiEye className="me-1" /> Ver Ficha Completa
           </Link>
         </td>
       </tr>

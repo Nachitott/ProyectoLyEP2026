@@ -1,6 +1,9 @@
 import '../css/detallecliente.css'
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { Modal, Button, Spinner } from "react-bootstrap";
+import { FiTrash2, FiAlertTriangle } from "react-icons/fi";
+ 
 import useAutorizaciones from "../hooks/useAutorizaciones";
 import clientesService from "../services/clientesService";
 
@@ -11,6 +14,8 @@ const DetalleCliente = () => {
 
   const [cliente, setCliente] = useState(null);
   const [mensaje, setMensaje] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [eliminando, setEliminando] = useState(false);
   
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -27,13 +32,28 @@ const DetalleCliente = () => {
       });
   }, [id]);
 
-  const eliminarCliente = async () => {
+  const abrirModalEliminar = () => {
+    setShowModal(true);
+  };
+
+  const cerrarModal = () => {
+    if (!eliminando) {
+      setShowModal(false);
+    }
+  };
+
+  const confirmarEliminacion = async () => {
+    setEliminando(true);
     try {
       await clientesService.eliminarCliente(id);
       setMensaje("Cliente eliminado correctamente");
+      setShowModal(false);
       setTimeout(() => navigate("/clientes"), 2000);
     } catch {
       setMensaje("Error al eliminar el cliente");
+      setShowModal(false);
+    } finally {
+      setEliminando(false);
     }
   };
 
@@ -93,11 +113,60 @@ const DetalleCliente = () => {
         <strong>Usuario:</strong> {cliente.username}
       </p>
 
+      <p>
+        <strong>Contraseña:</strong> {cliente.password}
+      </p>
+
       {admin?.sector?.trim() === "Gerencia" && (
-        <button className='btn-eliminar' onClick={eliminarCliente}>
-          Eliminar Cliente
+        <button className='btn-eliminar' onClick={abrirModalEliminar}>
+        <FiTrash2 className="me-1" /> Eliminar Cliente
         </button>
       )}
+
+      {/* Modal de Confirmación de Eliminación */}
+      <Modal show={showModal} onHide={cerrarModal} centered>
+        <Modal.Header closeButton={!eliminando}>
+          <Modal.Title className="d-flex align-items-center text-danger">
+            <FiAlertTriangle className="me-2" /> Confirmar Eliminación
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p className="mb-2">
+            ¿Está seguro de que desea eliminar al cliente{" "}
+            <strong>
+              {cliente.name?.firstname} {cliente.name?.lastname}
+            </strong>{" "}
+            (ID: {cliente.id})?
+          </p>
+          <p className="text-muted small mb-0">
+            Esta acción no se puede deshacer.
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={cerrarModal}
+            disabled={eliminando}
+          >
+            Cancelar
+          </Button>
+          <Button
+            variant="danger"
+            onClick={confirmarEliminacion}
+            disabled={eliminando}
+          >
+            {eliminando ? (
+              <>
+                <Spinner size="sm" className="me-1" animation="border" /> Eliminando...
+              </>
+            ) : (
+              <>
+                <FiTrash2 className="me-1" /> Confirmar Eliminación
+              </>
+            )}
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
