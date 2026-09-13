@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FiEye, FiSearch } from "react-icons/fi";
 import FormCliente from "../components/FormCliente";
+import clientesService from "../services/clientesService";
 import useDebounce from "../hooks/useDebounce";
 import { Spinner, Alert } from "react-bootstrap";
 
