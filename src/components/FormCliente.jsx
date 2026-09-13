@@ -1,6 +1,7 @@
 import '../css/formcliente.css'
 import { useState } from "react";
 import { Form, Button, Alert, Spinner } from "react-bootstrap";
+import { FiSave } from "react-icons/fi";
 import clientesService from "../services/clientesService";
 
 const FormCliente = () => {
@@ -158,7 +159,7 @@ const FormCliente = () => {
                     {
                         loading
                             ? <Spinner size="sm" />
-                            : "Guardar Cliente"
+                            : <><FiSave className="me-1" /> Guardar Cliente</>
                     }
 
                 </Button>

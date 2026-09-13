@@ -1,6 +1,7 @@
 import '../css/detallecliente.css'
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { FiTrash2 } from "react-icons/fi";
  
 const DetalleCliente = () => {
  const { id } = useParams();
@@ -93,8 +94,8 @@ const DetalleCliente = () => {
       </p>
 
       {role?.trim() === "Gerencia" && (
-        <button className='btn-eliminar'onClick={eliminarCliente}>
-          Eliminar Cliente
+        <button className='btn-eliminar' onClick={eliminarCliente}>
+          <FiTrash2 className="me-1" /> Eliminar Cliente
         </button>
       )}
     </div>

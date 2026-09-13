@@ -1,6 +1,7 @@
 import "../css/listaclientes.css"
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { FiEye, FiSearch } from "react-icons/fi";
 import FormCliente from "../components/FormCliente";
 
 const ListaClientes = () => {
@@ -107,7 +108,7 @@ const ListaClientes = () => {
                   className="btn-ficha"
                   to={`/clientes/${cliente.id}`}
                 >
-                  Ver Ficha Completa
+                  <FiEye className="me-1" /> Ver Ficha Completa
                 </Link>
               </td>
 
