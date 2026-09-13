@@ -54,24 +54,23 @@ const ListaClientes = () => {
 
       <hr />
 
-      <div className="contenedor-buscador">
-
-        <h2 className="titulo-buscador">
-          Buscar Clientes
-        </h2>
-
-        <input
-          className="buscador"
-          type="text"
-          placeholder="Buscar por apellido o ciudad"
-          value={busqueda}
-          onChange={(e) => setBusqueda(e.target.value)}
-        />
-
-        <p className="cantidad-clientes">
-          Clientes encontrados: {clientesFiltrados.length}
-        </p>
-
+      <div className="tabla-header-bar">
+        <h2 className="tabla-titulo">Listado de Clientes</h2>
+        <div className="contenedor-buscador">
+          <div className="buscador-input-group">
+            <FiSearch className="buscador-icon" />
+            <input
+              className="buscador"
+              type="text"
+              placeholder="Buscar por apellido o ciudad..."
+              value={busqueda}
+              onChange={(e) => setBusqueda(e.target.value)}
+            />
+          </div>
+          <span className="badge-cantidad">
+            {clientesFiltrados.length} encontrados
+          </span>
+        </div>
       </div>
       <table className="tabla-clientes">
 
