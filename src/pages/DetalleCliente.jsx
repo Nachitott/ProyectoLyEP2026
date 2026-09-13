@@ -4,20 +4,32 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Modal, Button, Spinner } from "react-bootstrap";
 import { FiTrash2, FiAlertTriangle } from "react-icons/fi";
  
+import useAutorizaciones from "../hooks/useAutorizaciones";
+import clientesService from "../services/clientesService";
+
 const DetalleCliente = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const role = localStorage.getItem("role");
+  const { admin } = useAutorizaciones();
 
   const [cliente, setCliente] = useState(null);
   const [mensaje, setMensaje] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [eliminando, setEliminando] = useState(false);
+  
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    fetch(`https://fakestoreapi.com/users/${id}`)
-      .then((res) => res.json())
-      .then((data) => setCliente(data));
+    clientesService.getClienteById(id)
+      .then(data => { 
+        setCliente(data); 
+        setLoading(false); 
+      })
+      .catch(() => { 
+        setError(true); 
+        setLoading(false); 
+      });
   }, [id]);
 
   const abrirModalEliminar = () => {
@@ -33,42 +45,32 @@ const DetalleCliente = () => {
   const confirmarEliminacion = async () => {
     setEliminando(true);
     try {
-      const respuesta = await fetch(
-        `https://fakestoreapi.com/users/${id}`,
-        {
-          method: "DELETE",
-        }
-      );
-
-      if (respuesta.ok) {
-        setShowModal(false);
-        setMensaje("Cliente eliminado correctamente");
-
-        setTimeout(() => {
-          navigate("/clientes");
-        }, 2000);
-      } else {
-        setMensaje("Error al eliminar cliente");
-        setShowModal(false);
-      }
+      await clientesService.eliminarCliente(id);
+      setMensaje("Cliente eliminado correctamente");
+      setShowModal(false);
+      setTimeout(() => navigate("/clientes"), 2000);
     } catch {
-      setMensaje("Error al eliminar cliente");
+      setMensaje("Error al eliminar el cliente");
       setShowModal(false);
     } finally {
       setEliminando(false);
     }
   };
 
-  if (!cliente) {
-    return <h2>Cargando cliente...</h2>;
+  if (loading) {
+    return <h2 style={{ textAlign: "center", marginTop: "20px" }}>Cargando ficha del cliente...</h2>;
+  }
+
+  if (error || !cliente) {
+    return <h2 style={{ color: "red", textAlign: "center", marginTop: "20px" }}>Error de conexión. No se pudo cargar el cliente.</h2>;
   }
 
   return (
     <div className="detalle-cliente">
       <h1>Ficha del Cliente</h1>
-      <p>Rol actual: {role}</p>
+      <p>Rol actual: {admin?.sector}</p>
 
-      {mensaje && <p className = 'mensaje-eliminado'>{mensaje}</p>}
+      {mensaje && <p className='mensaje-eliminado'>{mensaje}</p>}
 
       <p>
         <strong>ID:</strong> {cliente.id}
@@ -115,9 +117,9 @@ const DetalleCliente = () => {
         <strong>Contraseña:</strong> {cliente.password}
       </p>
 
-      {role?.trim() === "Gerencia" && (
+      {admin?.sector?.trim() === "Gerencia" && (
         <button className='btn-eliminar' onClick={abrirModalEliminar}>
-          <FiTrash2 className="me-1" /> Eliminar Cliente
+        <FiTrash2 className="me-1" /> Eliminar Cliente
         </button>
       )}
 

@@ -4,13 +4,12 @@ import { Form, Button, Alert, Spinner } from "react-bootstrap";
 import { FiSave } from "react-icons/fi";
 import clientesService from "../services/clientesService";
 
-const FormCliente = () => {
+const FormCliente = ({ onClienteCreado }) => {
 
     const [nombre, setNombre] = useState("");
     const [email, setEmail] = useState("");
     const [telefono, setTelefono] = useState("");
     const [ciudad, setCiudad] = useState("");
-
     const [mensaje, setMensaje] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
@@ -66,6 +65,13 @@ const FormCliente = () => {
             setMensaje(
                 `Cliente creado correctamente. ID: ${respuesta.id}`
             );
+
+            if (onClienteCreado) {
+                onClienteCreado({
+                    ...nuevoCliente,
+                    id: respuesta.id || Date.now()
+                });
+            }
 
             setNombre("");
             setEmail("");

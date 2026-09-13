@@ -139,3 +139,25 @@
 .tabla-clientes tbody tr:hover {
     background: var(--bg-surface-hover);
 } 
+input[type="text"]::placeholder{
+    color:#c78aa6;
+} 
+
+.contenedor-volver {
+  max-width: 500px;
+  margin: 1.5rem auto 0.5rem auto;
+  text-align: left;
+}
+
+.link-volver {
+  color: #d63384;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.link-volver:hover {
+  text-decoration: underline;
+}
